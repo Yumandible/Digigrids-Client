@@ -14,7 +14,7 @@ see requirements.txt for 3rd party imports
 Installation
 
 ```
-git clone https://github.com/yourusername/digigrids-client.git
+git clone https://github.com/Yumandible/digigrids-client.git
 cd digigrids-client
 pip install -r requirements.txt
 ```
