@@ -1,12 +1,12 @@
 # Digigrids-Client
-A Windows system tray application that automatically sends new FT8 / FT4 QSO (contact) records to digigrids.net, a grid-square tracking site for Ham radio operators for registered users of the site.
+A Windows system tray application that automatically sends new FT8 / FT4 QSO (contact) records to digigrids.net, a grid-square tracking site for Ham radio operators for registered users of the site. The site is in Beta and is free.
 
 What it does.
 
 
-Runs quietly in the Windows system tray
+The client runs quietly in the Windows system tray.
 Watches for new QSO records logged in your amateur radio digital modes software (FT8, FT4)
-Sends each new contact to digigrids.net in real time, so ya registered users grid-square tracking for leaderboards and awards stays up to date without manual uploads
+Sends each valid new contact to digigrids.net in real time, so registered users csan see a live stream of the qso data that is used for the leaderboards and live award tracking.
 
 Requirements
 Windows 10 or later
