@@ -25,6 +25,7 @@ Usage
 
 When run, the client will appear as an icon in your system tray. On first run you will be prompted to enter the path to your adif file for the software you use for FT8 / FT4 communication, and your API key obtained from digigrids.net after registering there via the QSO Stream menu item. 
 
+
 Then if you right click the client icon in the system tray you will see some options. Before it will send data to your account at the digigrids.net website you will need to ensure the 'watcher' is started. 
 
 
