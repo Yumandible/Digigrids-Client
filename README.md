@@ -23,9 +23,11 @@ git clone https://github.com/Yumandible/digigrids-client.git
 cd digigrids-client
 pip install -r requirements.txt
 ```
-**# Usage**
+**# Usage - if cloned from Git**
 
 Make sure you're in the digigrids-client folder before running this (if you closed and reopened your terminal, use `cd digigrids-client` first, from wherever you cloned it) — the script needs to find `digigrids_multi.ico` in the same folder it's run from.
+
+The below relates to whether you run the script from the terminal for the cloned repo, or whether you use the installer.
 
 When run, the client will appear as an icon in your system tray. On first run you will be prompted to enter the path to your adif file for the software you use for FT8 / FT4 communication, and your API key obtained from digigrids.net after registering there via the QSO Stream menu item. 
 
