@@ -17,7 +17,7 @@ see requirements.txt for 3rd party imports
 
 The **easiest way to get started** is to register at https://digigrids.net and login. Then go to the QSO stream menu item and you will see a link to the installer download.
 
-Or you can:
+Or if you have git installed on your PC you can:
 ```
 git clone https://github.com/Yumandible/digigrids-client.git
 cd digigrids-client
