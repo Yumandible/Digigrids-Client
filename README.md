@@ -15,7 +15,7 @@ see requirements.txt for 3rd party imports
 
 **# Installation**
 
-The **easiest way to get started** is to register at https://digigrids.net and login. Then go to the QSO stream menu item and you will see a link to the installer download.
+The **easiest way to get started** as long as you are a licensed ham radio operator is to register at https://digigrids.net and login. Then go to the QSO stream menu item and you will see a link to the installer download.
 
 Or if you have git installed on your PC you can:
 ```
