@@ -10,7 +10,7 @@ Sends each valid new contact to digigrids.net in real time, so registered users 
 
 Requirements
 Windows 10 or later
-Python 3.11/9 (tested on)
+Python 3.11.9 (tested on)
 see requirements.txt for 3rd party imports
 
 **# Installation**
