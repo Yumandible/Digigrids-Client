@@ -26,13 +26,13 @@ You can also download the installers directly from this repository's
 | System | File | Install |
 |---|---|---|
 | Windows 10 or later | `digigridsInstaller.exe` | Download and run |
-| Linux (Ubuntu / Mint / Debian) | `digigrids-client_3.0.0_all.deb` | See below |
+| Linux (Ubuntu / Mint / Debian) | `digigrids-client_3.0.2_all.deb` | See below |
 
 ### Linux install
 
 Download the `.deb`, then in a terminal (from your Downloads folder):
 
-    sudo apt install ./digigrids-client_3.0.0_all.deb
+    sudo apt install ./digigrids-client_3.0.2_all.deb
 
 All required components are installed automatically. Launch **Digigrids
 Client** from your applications menu.
