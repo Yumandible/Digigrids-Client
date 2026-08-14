@@ -35,16 +35,36 @@ Download the `.deb`, then in a terminal (from your Downloads folder):
     sudo apt install ./digigrids-client_3.0.3_all.deb
 
 All required components are installed automatically. Launch **Digigrids
-Client** from your applications menu.
+Client** from your applications menu. (See below for Raspberry Pi)
 
 > **Ubuntu (GNOME) note:** if no tray icon appears, run
 > `sudo apt install gnome-shell-extension-appindicator`, then log out and back
 > in. Most other desktops (Mint, Xubuntu, KDE) have tray support built in.
 
+### Raspberry Pi (Raspberry Pi OS Bookworm)
+
+The client works on Raspberry Pi OS and appears in the menu under
+**Accessories → Digigrids Client**. Two one-time checks after installing:
+
+- **Notifications:** Raspberry Pi OS has no notification pop-up service by
+  default, so install one (otherwise QSO alerts will not appear):
+
+      sudo apt install mako-notifier
+
+  To test it: `notify-send "test" "hello"` should show a pop-up.
+
+- **Tray icon:** if no icon appears, right-click the taskbar →
+  **Add/Remove Plugins** and make sure **System Tray** is in the active list.
+
+Tip: right-click the tray icon and set **Startup: On** so the client starts
+automatically whenever the Pi boots.
+
 ## Running from source instead
 
 If you have git installed you can run the client directly from this
 repository.
+
+
 
 **Windows** (Python 3.11.9 tested — see `windows/requirements.txt` for 3rd
 party imports):
@@ -62,11 +82,12 @@ find `digigrids_multi.ico` in the same folder it's run from.
 **Linux** (dependencies come from your distribution's packages):
 
 ```
-sudo apt install python3-pystray python3-pil python3-requests python3-tk libnotify-bin
+sudo apt install python3-pystray python3-pil python3-requests python3-tk python3-gi gir1.2-ayatanaappindicator3-0.1 libnotify-bin
 git clone https://github.com/Yumandible/digigrids-client.git
 cd digigrids-client/linux
 python3 digigrids_client.py
 ```
+
 
 ## Usage
 
