@@ -10,8 +10,25 @@ import subprocess     # LINUX CHANGE: used for desktop notifications via notify-
 from pathlib import Path
 import tkinter as tk
 from tkinter import filedialog, messagebox
-import pystray
 from PIL import Image
+
+# LINUX CHANGE (v3.0.3): on Wayland desktops such as Raspberry Pi OS
+# Bookworm, the panel ignores pystray's temp-file icons, so we talk to
+# the AppIndicator system directly using the theme icon installed by
+# the .deb ("digigrids"). On X11 desktops we keep using pystray.
+USE_NATIVE_TRAY = False
+if os.getenv("XDG_SESSION_TYPE", "").lower() == "wayland":
+    try:
+        import gi
+        gi.require_version('AyatanaAppIndicator3', '0.1')
+        gi.require_version('Gtk', '3.0')
+        from gi.repository import AyatanaAppIndicator3 as AI, Gtk, GLib
+        USE_NATIVE_TRAY = True
+    except Exception:
+        USE_NATIVE_TRAY = False
+
+if not USE_NATIVE_TRAY:
+    import pystray
 
 # -------------------------------
 # SINGLE INSTANCE LOCK
@@ -457,6 +474,19 @@ def create_highlight_icon():
     return HIGHLIGHT_ICON
 
 def flash_icon(duration=3):
+    if USE_NATIVE_TRAY:
+        try:
+            GLib.idle_add(_indicator.set_icon_full, "digigrids-alert", "New grid")
+
+            def restore():
+                time.sleep(duration)
+                GLib.idle_add(_indicator.set_icon_full, "digigrids", "Digigrids")
+
+            threading.Thread(target=restore, daemon=True).start()
+        except Exception as e:
+            log_error(f"Flash icon error: {e}")
+        return
+
     if not tray_icon:
         return
 
@@ -499,7 +529,9 @@ def configure(icon, item):
             save_config(config)
             config = load_config()
             window.destroy()
-            if icon:
+            if USE_NATIVE_TRAY:
+                _native_refresh_menu()
+            elif icon:
                 icon.menu = create_menu()
                 icon.update_menu()
             log("Config saved")
@@ -538,7 +570,10 @@ def quit_app(icon, item):
     running = False  # stop watcher loop
     time.sleep(0.5)  # allow thread to exit cleanly
 
-    icon.stop()
+    if USE_NATIVE_TRAY:
+        Gtk.main_quit()
+    else:
+        icon.stop()
 
     log("Digigrids client closed")
 
@@ -569,15 +604,54 @@ def create_menu():
 # MAIN
 # -------------------------------
 
-tray_icon = pystray.Icon(
-    "Digigrids",
-    create_icon(),
-    "Digigrids Client"
-)
+_indicator = None
 
-tray_icon.menu = create_menu()
+def _native_menu():
+    # Build a Gtk menu mirroring the pystray one
+    menu = Gtk.Menu()
 
-log("Digigrids client started")
+    def add(label, callback):
+        item = Gtk.MenuItem(label=label)
+        item.connect("activate", lambda _i: callback(None, None))
+        menu.append(item)
+        item.show()
+
+    if is_config_valid():
+        add("Start Watch ADIF", start_watcher)
+        add("Stop Watch ADIF", stop_watcher)
+        startup_label = "Startup: On" if is_startup_enabled() else "Startup: Off"
+        add(startup_label + "  (click to toggle)", _native_toggle_startup)
+        add("Configure", configure)
+    else:
+        add("Settings", configure)
+    add("Exit", quit_app)
+    return menu
+
+def _native_refresh_menu():
+    if _indicator:
+        GLib.idle_add(_indicator.set_menu, _native_menu())
+
+def _native_toggle_startup(icon, item):
+    set_startup(not is_startup_enabled())
+    _native_refresh_menu()
+
+if USE_NATIVE_TRAY:
+    _indicator = AI.Indicator.new(
+        "digigrids", "digigrids", AI.IndicatorCategory.APPLICATION_STATUS
+    )
+    _indicator.set_status(AI.IndicatorStatus.ACTIVE)
+    _indicator.set_title("Digigrids Client")
+    _indicator.set_menu(_native_menu())
+    tray_icon = None
+    log("Digigrids client started (native tray)")
+else:
+    tray_icon = pystray.Icon(
+        "Digigrids",
+        create_icon(),
+        "Digigrids Client"
+    )
+    tray_icon.menu = create_menu()
+    log("Digigrids client started")
 
 # AUTO START WATCHER
 if is_config_valid():
@@ -602,4 +676,7 @@ if not is_config_valid():
 
     threading.Thread(target=first_run, daemon=True).start()
 
-tray_icon.run()
+if USE_NATIVE_TRAY:
+    Gtk.main()
+else:
+    tray_icon.run()
