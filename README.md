@@ -26,7 +26,7 @@ You can also download the installers directly from this repository's
 | System | File | Install |
 |---|---|---|
 | Windows 10 or later | `digigridsInstaller.exe` | Download and run |
-| Linux (Ubuntu / Mint / Debian) | `digigrids-client_3.0.3_all.deb` | See below |
+| Linux (Ubuntu / Mint / Debian / Raspberry Pi OS) | `digigrids-client_3.0.3_all.deb` | See below |
 
 ### Linux install
 
