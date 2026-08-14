@@ -32,7 +32,7 @@ You can also download the installers directly from this repository's
 
 Download the `.deb`, then in a terminal (from your Downloads folder):
 
-    sudo apt install ./digigrids-client_3.0.2_all.deb
+    sudo apt install ./digigrids-client_3.0.3_all.deb
 
 All required components are installed automatically. Launch **Digigrids
 Client** from your applications menu.
